@@ -18,6 +18,8 @@ screen = pygame.display.set_mode(size)
 pygame.display.set_caption("My window")
 # -- Exit game flag set to False
 done = False
+sun_x = 40
+sun_y = 100
 # -- Manages how fast screen refresh
 clock = pygame.time.Clock()
 
@@ -30,16 +32,16 @@ while not done:
         #Endif
     #Next event
     #--Game logic goes after this comment
-    
+    sun_x += 5
     # -- Screen background is BLACK
     screen.fill(BLACK)
 
     # -- Draw here
     # screen, [red, blue, green], (left, top, width, height))
-    pygame.draw.rect(screen,RED,(220,100,150,150))
+    pygame.draw.rect(screen,BLUE,(220,165,200,150))
 
     # circle(surface, color, center, radius, width)
-    pygame.draw.circle(screen,YELLOW,(40,40),40,2)
+    pygame.draw.circle(screen,YELLOW,(sun_x,sun_y),40,0)
 
     # -- flip display to reveal new position of objects
     pygame.display.flip()
