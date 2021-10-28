@@ -35,8 +35,8 @@ while not done:
         #Endif
     #Next event
     #--Game logic goes after this comment
-    if sun_x >= size[0] + 60 or sun_x <= -60:
-        xspeed *= -1
+    if sun_x >= size[0] + 60:
+        sun_x = 0
     sun_x += xspeed
     sun_y = -math.sqrt(abs((size[0]/2 + 60) ** 2 - (sun_x - size[0] / 2) ** 2)) + size[1] / 2
     # -- Screen background is BLACK
