@@ -1,4 +1,4 @@
-import pygame, math, random
+import pygame, random
 # --Global Constant
 
 # -- Color 
@@ -12,7 +12,7 @@ RED = (255,0,0)
 
 class Invader(pygame.sprite.Sprite):
     
-    def __init__(self,color, width, height, speed):
+    def __init__(self, speed):
 
         super().__init__()
         self.speed = speed
@@ -34,6 +34,8 @@ class Player(pygame.sprite.Sprite):
 
         super().__init__()
         self.speed = 0
+        self.width = width
+        self.height = height
         self.image = pygame.Surface([width, height])
         self.image.fill(color)
         self.rect = self.image.get_rect()
@@ -45,10 +47,13 @@ class Player(pygame.sprite.Sprite):
 
     def update(self):
         self.rect.x += self.speed
+        if self.rect.x <=0:
+            self.rect.x =0
+        if self.rect.x >= size[0] - self.width:
+            self.rect.x = size[0] -self.width
 
     def player_set_speed(self, speed):
-        if not(self.rect.x <= 0 or self.rect.x >= 640):
-            self.speed = speed
+        self.speed = speed
     
     def change_bullet(self, number):
         self.bullet_count += number
@@ -84,7 +89,7 @@ invader_group = pygame.sprite.Group()
 all_sprites_group = pygame.sprite.Group()
 numberOfInvaders = 10
 for i in range(numberOfInvaders):
-    invader = Invader(WHITE, 5, 5, 1)
+    invader = Invader(1)
     invader_group.add(invader)
     all_sprites_group.add(invader)  
 ### -- Game loop
@@ -98,7 +103,7 @@ font = pygame.font.Font("freesansbold.ttf", 20)
 while not done:
     # -- User input and controls
     for event in pygame.event.get():
-        if event.type == pygame.QUIT:
+        if event.type == pygame.QUIT or player.lives <= 0 or player.score == 20:
             done = True
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
@@ -123,6 +128,9 @@ while not done:
         bullet_hit_group=pygame.sprite.spritecollide(bullet,invader_group,True)
         for hit in bullet_hit_group:
             hit.kill()
+            invader = Invader(1)
+            invader_group.add(invader)
+            all_sprites_group.add(invader) 
             player.score += 1
     for foo in player_hit_group:
         player.lives=player.lives-1

@@ -1,7 +1,6 @@
 import pygame, math, random, time
 
 def ballAnimation(ballspeedx, ballspeedy, ballradius):
-    global score, life
     temp_score = score
     temp_life = life
     ball.x += ballspeedx
